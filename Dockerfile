@@ -1,4 +1,4 @@
-FROM hasura/graphql-engine:v2.2.0.cli-migrations-v3
+FROM hasura/graphql-engine:v2.2.0
 
 ENV HASURA_GRAPHQL_MIGRATIONS_DIR="/hasura-migrations"
 ENV HASURA_GRAPHQL_METADATA_DIR="/hasura-metadata"
@@ -13,4 +13,6 @@ ENV HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-
 ENV HASURA_GRAPHQL_ADMIN_SECRET="$HASURA_GRAPHQL_ADMIN_SECRET"
 
 EXPOSE 8080
-CMD ["graphql-engine", "serve"]
+CMD graphql-engine \
+    --database-url $HASURA_GRAPHQL_DATABASE_URL \
+    serve
