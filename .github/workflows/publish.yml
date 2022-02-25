@@ -24,9 +24,9 @@ jobs:
           FANDOGH_PASSWORD: ${{ secrets.FANDOGH_PASSWORD }}
           APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
           HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
-          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
         run: |
           yes | fandogh login --username="$FANDOGH_USERNAME" --password="$FANDOGH_PASSWORD"
           fandogh image init --name="$FANDOGH_SERVICE_NAME"
           fandogh image publish --version="v$GITHUB_RUN_ID"
-          fandogh service deploy --image="$FANDOGH_SERVICE_NAME" --version="v$GITHUB_RUN_ID" --name="$FANDOGH_SERVICE_NAME" --port 8080 --hosts="$APP_DOMAIN" --env HASURA_GRAPHQL_METADATA_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_GRAPHQL_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env PG_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_ADMIN_SECRET="$HASURA_ADMIN_SECRET" --env HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log" 
+          fandogh service deploy --image="$FANDOGH_SERVICE_NAME" --version="v$GITHUB_RUN_ID" --name="$FANDOGH_SERVICE_NAME" --port 8080 --hosts="$APP_DOMAIN" --env HASURA_GRAPHQL_METADATA_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_GRAPHQL_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env PG_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_GRAPHQL_ADMIN_SECRET="$HASURA_GRAPHQL_ADMIN_SECRET" --env HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log" 
