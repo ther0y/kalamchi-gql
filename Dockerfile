@@ -1,7 +1,10 @@
-FROM hasura/graphql-engine:v2.2.1.cli-migrations-v3
+FROM hasura/graphql-engine:v2.2.0
 
-COPY ./migrations "/hasura-migrations"
-COPY ./metadata "/hasura-metadata"
+ENV HASURA_GRAPHQL_MIGRATIONS_DIR="/hasura-migrations"
+ENV HASURA_GRAPHQL_METADATA_DIR="/hasura-metadata"
+COPY ./migrations "${HASURA_GRAPHQL_MIGRATIONS_DIR}"
+COPY ./metadata "${HASURA_GRAPHQL_METADATA_DIR}"
+COPY config.yaml .
 
 ENV HASURA_GRAPHQL_METADATA_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL"
 ENV HASURA_GRAPHQL_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL"
