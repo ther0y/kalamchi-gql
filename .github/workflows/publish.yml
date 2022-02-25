@@ -1,4 +1,4 @@
-name: Publish
+name: Publish dev
 on:
   push:
     branches: [main]
@@ -17,6 +17,6 @@ jobs:
           HASURA_GRAPHQL_ENDPOINT: ${{ secrets.HASURA_GRAPHQL_ENDPOINT }}
           HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
         run: |
+          hasura migrate apply --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
           hasura metadata apply --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
           hasura metadata reload --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
-          hasura migrate apply --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
