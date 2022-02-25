@@ -29,4 +29,4 @@ jobs:
           yes | fandogh login --username="$FANDOGH_USERNAME" --password="$FANDOGH_PASSWORD"
           fandogh image init --name="$FANDOGH_SERVICE_NAME"
           fandogh image publish --version="v$GITHUB_RUN_ID"
-          fandogh service deploy --image="$FANDOGH_SERVICE_NAME" --version="v$GITHUB_RUN_ID" --name="$FANDOGH_SERVICE_NAME" --port 3000 --hosts="$APP_DOMAIN" --env HASURA_GRAPHQL_DATABASE_URL="HASURA_GRAPHQL_DATABASE_URL" --env HASURA_ADMIN_SECRET="$HASURA_ADMIN_SECRET"
+          fandogh service deploy --image="$FANDOGH_SERVICE_NAME" --version="v$GITHUB_RUN_ID" --name="$FANDOGH_SERVICE_NAME" --port 3000 --hosts="$APP_DOMAIN" --env HASURA_GRAPHQL_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_ADMIN_SECRET="$HASURA_ADMIN_SECRET"
