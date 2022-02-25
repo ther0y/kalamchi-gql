@@ -1,4 +1,4 @@
-name: Publish Dev
+name: Publish dev
 on:
   push:
     branches: [dev]
@@ -10,23 +10,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: Setup Fandogh CLI
-        run: |
-          pip install fandogh-cli
-      - name: deploy
+      - name: install Hasura cli
+        run: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
+      - name: apply migrations and metadata
         env:
-          FANDOGH_SERVICE_NAME: ${{ secrets.FANDOGH_SERVICE_NAME_DEV }}
-          FANDOGH_USERNAME: ${{ secrets.FANDOGH_USERNAME }}
-          FANDOGH_PASSWORD: ${{ secrets.FANDOGH_PASSWORD }}
-          APP_DOMAIN: ${{ secrets.APP_DOMAIN_DEV }}
-          HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+          HASURA_GRAPHQL_ENDPOINT: ${{ secrets.HASURA_GRAPHQL_ENDPOINT }}
           HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
         run: |
-          yes | fandogh login --username="$FANDOGH_USERNAME" --password="$FANDOGH_PASSWORD"
-          fandogh image init --name="$FANDOGH_SERVICE_NAME"
-          fandogh image publish --version="v$GITHUB_RUN_ID"
-          fandogh service deploy --image="$FANDOGH_SERVICE_NAME" --version="v$GITHUB_RUN_ID" --name="$FANDOGH_SERVICE_NAME" --port 8080 --hosts="$APP_DOMAIN" --env HASURA_GRAPHQL_METADATA_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_GRAPHQL_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env PG_DATABASE_URL="$HASURA_GRAPHQL_DATABASE_URL" --env HASURA_GRAPHQL_ADMIN_SECRET="$HASURA_GRAPHQL_ADMIN_SECRET" --env HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"
+          hasura metadata apply --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
+          hasura metadata reload --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
+          hasura migrate apply --endpoint="$HASURA_GRAPHQL_ENDPOINT" --admin-secret="$HASURA_GRAPHQL_ADMIN_SECRET"
