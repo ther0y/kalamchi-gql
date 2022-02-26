@@ -1,0 +1,13 @@
+type Mutation {
+  addNewGame(
+    word: String
+    date: timestamp
+    round: Int
+    guess_count: Int
+  ): AddNewGameOutput
+}
+
+type AddNewGameOutput {
+  id: uuid!
+}
+

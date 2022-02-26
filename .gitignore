@@ -2,3 +2,8 @@
 /.idea
 /db_data
 .code
+
+# env files
+.env.local
+.env.dev
+.env.prod
