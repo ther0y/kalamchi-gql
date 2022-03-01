@@ -5,7 +5,7 @@ actions:
     handler: '{{ACTION_BASE_URL}}/addNewGame'
     forward_client_headers: true
     headers:
-    - name: ACTION_SECRET
+    - name: ACTION-SECRET
       value_from_env: ACTION_SECRET_ENV
 custom_types:
   enums: []
