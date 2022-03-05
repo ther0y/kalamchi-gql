@@ -7,9 +7,34 @@ actions:
     headers:
     - name: ACTION-SECRET
       value_from_env: ACTION_SECRET_ENV
+- name: gameById
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/gameById'
+  permissions:
+  - role: guest
+- name: gamesList
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/gamesList'
+- name: login
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/auth/login'
+  permissions:
+  - role: guest
+- name: register
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/auth/register'
 custom_types:
   enums: []
   input_objects: []
   objects:
   - name: AddNewGameOutput
-  scalars: []
+  - name: GAME
+  - name: Game
+  - name: RegisterOutput
+  - name: LoginOutput
+  scalars:
+  - name: Date

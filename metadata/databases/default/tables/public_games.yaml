@@ -1,3 +1,13 @@
 table:
   name: games
   schema: public
+select_permissions:
+- permission:
+    columns:
+    - date
+    - id
+    - round
+    filter:
+      date:
+        _lte: now()
+  role: guest

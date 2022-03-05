@@ -7,7 +7,62 @@ type Mutation {
   ): AddNewGameOutput
 }
 
+type Query {
+  gameById(
+    id: String!
+  ): Game
+}
+
+type Query {
+  gamesList: [Game]
+}
+
+type Mutation {
+  login(
+    username: String!
+    password: String!
+  ): LoginOutput
+}
+
+type Mutation {
+  register(
+    username: String!
+    password: String!
+    email: String
+  ): RegisterOutput
+}
+
 type AddNewGameOutput {
   id: uuid!
 }
+
+type GAME {
+  id: uuid!
+  word: String!
+  round: Int!
+  guess_count: Int!
+  date: String!
+}
+
+type Game {
+  id: uuid!
+  word: String!
+  round: Int!
+  guess_count: Int!
+  date: String!
+}
+
+type RegisterOutput {
+  id: String!
+  accessToken: String!
+  refreshToken: String!
+}
+
+type LoginOutput {
+  id: String!
+  accessToken: String!
+  refreshToken: String!
+}
+
+scalar Date
 
